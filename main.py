@@ -10,10 +10,9 @@ def main():
     
     if choice == "1":
         ip_input = input("Enter IP (single, range, or CIDR): ").strip()
-        # You can customize ports as you want
-        common_ports = [22, 80, 443, 8080]
+        common_ports = [22, 80, 443, 8080]  # example ports to scan
         
-        print(f"Scanning IPs: {ip_input} on ports {common_ports} ...")
+        print(f"Scanning {ip_input} on ports {common_ports} ...")
         
         scanner.run_scan(ip_input, common_ports)
         
