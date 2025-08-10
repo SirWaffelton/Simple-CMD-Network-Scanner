@@ -4,7 +4,7 @@ import platform
 import socket
 from typing import List, Dict
 
-def parse_ip_input(ip_input: str):
+def parse_ip_input(ip_input: str) -> List[str]:
     """
     Parses an IP input string and returns a list of IP addresses.
     Supports:
@@ -29,7 +29,6 @@ def parse_ip_input(ip_input: str):
         ip_list = [str(ip) for ip in network.hosts()]  # hosts() excludes network and broadcast addresses
     else:
         # Single IP
-        # Validate IP
         ip = ipaddress.IPv4Address(ip_input)
         ip_list = [str(ip)]
     
@@ -75,6 +74,9 @@ def scan_network(ip_list: List[str], ports: List[int]) -> Dict[str, List[int]]:
     return scanned_results
 
 def run_scan(ip_input: str, ports: List[int]):
+    """
+    Parses IP input, scans network, and prints results.
+    """
     try:
         ip_list = parse_ip_input(ip_input)
     except ValueError as e:
@@ -87,4 +89,5 @@ def run_scan(ip_input: str, ports: List[int]):
         print("No active hosts found.")
     else:
         for ip, open_ports in results.items():
-            print(f"{ip} is active. Open ports: {open_ports if open_ports else 'None'}")
+            ports_str = ", ".join(str(p) for p in open_ports) if open_ports else "None"
+            print(f"{ip} is active. Open ports: {ports_str}")
